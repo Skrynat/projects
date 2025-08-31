@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+
+# all VS Code workspace settings
+.vscode/
+.vscode/settings.json
