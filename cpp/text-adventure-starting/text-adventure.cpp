@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <cstdlib>
 
 /* This program will be a game/text adventure with branches, 
 multiple choices, and different endings which rely on user's choices */
@@ -37,6 +38,17 @@ void cowardlyEnding() {
     std::cout << "*Cowardly Ending*\n";
 }
 
+void apprenticeTragicEnding() {
+    std::cout << "\nYou decide to refuse the dark mage's offer.\n";
+    std::cout << "The dark mage looks at you with a mix of disappointment and anger.\n";
+    std::cout << "\"Very well,\" he says.\n";
+    std::cout << "For a moment, you feel that something is wrong.\n";
+    std::cout << "Before you can react, an earth spike is already penetrating your chest, and you fall to the ground, cold and lifeless...\n\n";
+    std::cout << "You are remembered as a brave soul who fought valiantly against the goblins, but also as a cautionary tale about the dangers of pride and overconfidence.\n";
+    std::cout << "The village elder holds a small ceremony in your honor before leaving the village for the last time.\n";
+    std::cout << "Your story is told for generations to come, inspiring others to be brave and selfless.\n\n";
+    std::cout << "*Tragic Heroic Ending*\n";
+}
 
 
 
@@ -80,6 +92,7 @@ int main() {
     std::cout << "Do you want to pick it up?\n";
     std::cout << "1. Yes\n2. No\n Your choice: ";
 
+    int grimoire = 0;      // Section: Whether the user has a grimoire or not (affects wizard interaction)
     int pickgem;        // Section: Gemstone choice (may affect wizard interaction)
     std::cin >> pickgem; 
 
@@ -250,7 +263,6 @@ int main() {
         }
     } 
     else if (prepare == 2) {
-        int grimoire = 0;
         std::cout << "\nYou head to the wizard's tower.\n";
         std::cout << "The wizard greets you and asks what you need.\n";
         std::cout << "You explain the situation and ask for a grimoire.\n";
@@ -262,6 +274,7 @@ int main() {
             std::cout << "He says it's a rare and powerful gemstone, capable of amplifying magical abilities.\n";
             std::cout << "He offers to enchant the grimoire with the gemstone's power, making it even more effective.\n";
             std::cout << "You gladly agree and hand over the gemstone.\n";
+            pickgem = 0; //the user no longer has the gemstone
             grimoire = 2;
         }
         else {
@@ -328,7 +341,6 @@ int main() {
             std::cout << "With your new weapon in hand, you feel confident and ready to face the goblins.\n";
             std::cout << "You step out from behind the tree and charge at the goblins, shouting a battle cry.\n";
             std::cout << "The goblins are caught off guard and you manage to take down a few of them before they can react.\n";
-
             while (repeatCheckpoint) {
             std::cout << "The rest of the goblins quickly regroup.\nWhat do you do next?\n";
             std::cout << "1. Continue fighting\n2. Try to intimidate them\n3. Run and try to come up with a plan B while escaping the goblins.\n Your choice: ";
@@ -447,7 +459,6 @@ int main() {
                 }
                 repeatCheckpoint = false;
             } 
-            
             else if (swordchoice == 2) {
                 std::cout << "\nYou stand out from the cover, slowly approaching the goblins with a heroic walk.\n";
                 std::cout << "You point your weapon at them and shout: \"What are you doing in our forest, goblins?\"\n";
@@ -591,24 +602,134 @@ int main() {
                     std::cout << "You are dead. Game over.\n";
                     std::cout << "*Dead Ending*\n";
                     repeatCheckpoint = false;
+                    }
                 }
-            }
-        }
+            } //end of while loop
             break;
-
         case 2:
             std::cout << "With the grimoire in hand, you feel a surge of magical energy coursing through your veins.\n";
             std::cout << "You step out from behind the tree and begin to chant a spell from the grimoire.\n";
-            std::cout << "A bolt of lightning shoots from your fingertips, striking one of the goblins and sending it flying.\n";
-            std::cout << "The other goblins are momentarily stunned by the display of magic, giving you an advantage.\n";
-            std::cout << "You continue to cast spells, taking down goblin after goblin with ease.\n";
-            std::cout << "Eventually, all the goblins are defeated and you stand victorious.\n";
-            std::cout << "You make your way back to the village, where you are hailed as a hero for your magical prowess.\n";
+            if (grimoire == 2) {
+                std::cout << "Since the grimoire was enchanted with the gemstone's power, a couple of extra spells appeared in it.\n";
+                std::cout << "You were surprised to see them appear, but you quickly adapted to them.\n";
+                std::cout << "You cast a powerful metero spell, which lands right in the middle of the goblin group, instantly incinerating them all.\n";
+                std::cout << "The goblins didn't even have a chance to react.\n";
+                std::cout << "You stand there, victorious and amazed at your own power...\n";
+                std::cout << "As you make your way back to the village, on the way, you see a mysterious figure in a black cloak watching you from the shadows.\n";
+                std::cout << "You feel a chill run down your spine, but the dark mage started to approach you.\n";
+                std::cout << "The dark mage introduces himself as a sorcerer who has been watching you.\n";
+                std::cout << "You ask him: \"What do you want from me?\"\n";
+                std::cout << "He responds: \"You look like a worthy opponent\".\n";
+                std::cout << "Without any further warning, he casts a Rock Bullet spell at you.\n";
+                std::cout << "To protect yourself, you quickly cast an earth wall spell, which blocks the attack.\n";
+                std::cout << "What do you do next?\n";
+                std::cout << "1. Try to negotiate with him\n2. Accept the fight with him\n3. Run away\n Your choice: ";
+                int magechoice;
+                std::cin >> magechoice;   // Section: Multiple choices of the wizard path (affects the ending)
+                if (magechoice == 1) {
+                    std::cout << "\nYou decide to try to negotiate with the dark mage.\n";
+                    std::cout << "You ask him what he wants and why he is attacking you.\n";
+                    std::cout << "The dark mage responds: \"I can't let someone with your power roam free.\"\n";
+                    std::cout << "You explain that you are just trying to protect your village from the goblins.\n";
+                    std::cout << "The dark mage seems to consider your words for a moment, then says: \"I can make you a counter-offer.\"\n";
+                    std::cout << "\"If you would agree to become my apprentice, I'll take care of the village for you.\"\n";
+                    std::cout << "But it seems like he is hiding something.\n";
+                    std::cout << "\"What's the catch?\" you ask.\n";
+                    std::cout << "The dark mage waits for a moment, then says: \"You won't be able to see that village anymore.\"\n";
+                    std::cout << "\"You will be bound to me, and you will have to leave your old life behind.\"\n";
+                    std::cout << "You feel a sense of unease, but also a sense of curiosity.\n";
+                    std::cout << "Do you accept his offer?\n";
+                    std::cout << "1. Yes\n2. No\n Your choice: ";
+                    int apprenticechoice;
+                    std::cin >> apprenticechoice;
+                    if (apprenticechoice == 1) {
+                        std::cout << "\nYou decide to accept the dark mage's offer and become his apprentice.\n";
+                        std::cout << "You follow him into the forest, leaving your old life behind.\n";
+                        std::cout << "You spend the next few years learning the ways of magic from the dark mage, becoming a powerful sorcerer yourself.\n";
+                        std::cout << "You roam together across the lands, helping him with his dark deeds.\n";
+                        std::cout << "But you never forget your village and the people you left behind.\n\n";
+                        std::cout << "As a protection for the village as the dark mage promised, he set up a powerful barrier around it, which prevents any goblins from entering.\n";
+                        std::cout << "Also, he gave the village wizard some knowledge about how to train new wizards, so the village will be protected in the future.\n";
+                        std::cout << "The village elder holds a small ceremony in your honor, and a statue is erected in the village square.\n";
+                        std::cout << "Your story is told for generations to come, inspiring others to be brave and selfless.\n\n";
+                        std::cout << "*Apprentice Ending*\n";
+                    }
+                    else if (apprenticechoice == 2) {
+                        apprenticeTragicEnding();
+                    }
+                    else {
+                         for (int i = 0; i < 2; i++) {
+                        std::cout << "Wrong answer. Please try again: ";
+                        std::cin >> apprenticechoice;
+                        }
+                        apprenticeTragicEnding();
+                    }
+                }
+                else if (magechoice == 2) {
+                    std::cout << "\nYou decide to accept the fight with the dark mage.\n";
+                    std::cout << "The battle is fierce and intense, with both of you casting powerful spells at each other.\n";
+                    std::cout << "You manage to dodge most of his attacks, but he is a skilled sorcerer and he manages to land a few hits on you.\n";
+                    std::cout << "At one point, you get injured, which decreases your magical capabilities.\n";
+                    std::cout << "Despite the injury, you manage to hold your ground and keep fighting.\n";
+                    std::cout << "As you keep fighting, you see the villige wizard running at your direction.\n";
+                    std::cout << "He quickly casts a shield spell around you, which blocks the dark mage's next attack.\n";
+                    std::cout << "The dark mage looks at the wizard with a mix of surprise and anger.\n";
+                    std::cout << "Once the dark mage had the change, he quickly casts a teleportation spell, disappearing from sight.\n";
+                    std::cout << "You are relieved that the fight is over, but you are also injured and exhausted.\n\n";
+                    std::cout << "You make your way back to the village with the wizard, where you are hailed as a hero for your bravery.\n";
+                    std::cout << "The village elder holds a small ceremony in your honor, and a statue is erected in the village square.\n";
+                    std::cout << "Your story is told for generations to come, inspiring others to be brave and selfless.\n\n";
+                    std::cout << "But you knew, that the dark mage will be back, and next time, he will be more prepared.\n";
+                    std::cout << "So you keep training together with the village wizard, preparing for the next encounter with the dark mage...\n";
+                    std::cout << "*Heroic Mage Ending*\n";
+                }
+                else if (magechoice == 3) {
+                    std::cout << "\nYou decide that discretion is the better part of valor and choose to run away from the dark mage.\n";
+                    std::cout << "You sprint through the forest, dodging trees and leaping over roots.\n";
+                    std::cout << "You managed to lose the dark mage in the forest.\n";
+                    std::cout << "As you get back to the village, you feel a sense of relief.\n\n";
+                    std::cout << "You make your way back to the village, where you are hailed as a hero for your bravery.\n";
+                    std::cout << "The village elder holds a small ceremony in your honor, and a statue is erected in the village square.\n";
+                    std::cout << "Your story is told for generations to come, inspiring others to be brave and selfless.\n";
+                    std::cout << "But something still bothers you about that dark mage...\n";
+                    std::cout << "You have a feeling that this was not the last time you see him...\n\n";
+                    std::cout << "*Happy Ending(?)*\n";
+                }
+                else {
+                     for (int i = 0; i < 2; i++) {
+                    std::cout << "Wrong answer. Please try again: ";
+                    std::cin >> magechoice;
+                    }
+                    std::cout << "When you were standing there, trying to come up with a plan, the dark mage have already pierced your chest with an earth spike.\n"; 
+                    std::cout << "You fall to the ground, cold and lifeless...\n\n";
+                    std::cout << "You are dead. Game over.\n";
+                    std::cout << "*Dead Ending*\n";
+                }
+            }
+            else {
+                std::cout << "You cast a fireball spell, which lands right in the middle of the goblin group, engulfing some of them in flames.\n";
+                std::cout << "The goblins didn't even have a chance to react.\n";
+                std::cout << "As the remaining goblins are trying to recover from the shock, you quickly cast a lightning bolt spell, which strikes down several more goblins.\n";
+                std::cout << "The goblins are now in full panic mode, and they start to flee.\n";
+                std::cout << "You stand there, victorious and amazed at your own power...\n";
+                std::cout << "You make your way back to the village, where you are hailed as a hero for your bravery and cunning.\n";
+                std::cout << "The village elder holds a small ceremony in your honor, and a statue is erected in the village square.\n";
+                std::cout << "Your story is told for generations to come, inspiring others to be brave and selfless.\n\n";
+                std::cout << "*Heroic Ending*\n";
+            }
             break;
         case 3:
-            std::cout << "Without any preparation, you feel a bit nervous as you step out from behind the tree.\n";
-            std::cout << "The goblins notice you immediately and charge at you with their crude weapons.\n";
-            std::cout << "You try to defend yourself with your bare hands, but it's no use against their numbers and";
+            std::cout << "You see a rock on the ground and pick it up.\n";
+            std::cout << "You throw the rock at the goblins, hitting one of them.\n";
+            std::cout << "The goblins are now alerted to your presence and they start to chase you.\n";
+            std::cout << "You run as fast as you can, but the goblins are faster.\n";
+            std::cout << "They quickly catch up to you and surround you.\n";
+            std::cout << "You are outnumbered and outmatched.\n";
+            std::cout << "The goblins attack you, and you are quickly overwhelmed.\n";
+            std::cout << "You fall to the ground, cold and lifeless...\n\n";
+            std::cout << "You are dead. Game over.\n"; 
             break;
 }
+    std::cout << "\nThank you for playing!\n";
+    return 0;
 }
