@@ -296,9 +296,7 @@ int main() {
             std::cout << "The blacksmith examines and says it has no value to him.\n";
             std::this_thread::sleep_for(std::chrono::seconds(2));
             prepared = false;
-        } else {
-            continue;
-        }
+        } else {}
         
         std::cout << "Should you try to negotiate?\n";
         std::this_thread::sleep_for(std::chrono::seconds(1));
